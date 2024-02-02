@@ -1,0 +1,28 @@
+.centerIconText {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.custom-background{
+    background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    flex: 1; 
+    overflow: auto;
+    min-height: 100%;
+}
+
+.ccontainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+@media screen and (max-width:500px){
+    #navRight{
+        flex-direction: column;
+    }
+    
+}

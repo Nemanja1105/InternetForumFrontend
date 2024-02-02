@@ -21,4 +21,11 @@ export class AuthService {
   public login(request: any): Observable<any> {
     return this.http.post(config.API_URL + '/auth/login', request);
   }
+
+  public finishLogin(request: any): Observable<any> {
+    return this.http.post(config.API_URL + "/auth/finish-login", request);
+  }
+
+
+
 }

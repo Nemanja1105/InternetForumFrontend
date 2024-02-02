@@ -34,7 +34,9 @@ export class RegisterComponent {
   usernameValid = true;
   emailValid = true;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: CustomSnackBarService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private snackBar: CustomSnackBarService, private router: Router) {
+    sessionStorage.removeItem("FIRST_PART_LOGIN");
+  }
 
   onBlur(control: any) {
     control.markAsTouched();

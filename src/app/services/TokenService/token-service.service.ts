@@ -10,17 +10,17 @@ export class TokenService {
 
   public logout() {
     //window.localStorage.clear();
-    window.localStorage.removeItem(config.JWT_KEY);
-    window.localStorage.removeItem(config.USER_KEY);
+    sessionStorage.removeItem(config.JWT_KEY);
+    sessionStorage.removeItem(config.USER_KEY);
   }
 
   public storeJwt(jwtToken: string) {
-    window.localStorage.removeItem(config.JWT_KEY);
-    window.localStorage.setItem(config.JWT_KEY, jwtToken);
+    sessionStorage.removeItem(config.JWT_KEY);
+    sessionStorage.setItem(config.JWT_KEY, jwtToken);
   }
 
   public getJwt(): string | null {
-    return window.localStorage.getItem(config.JWT_KEY);
+    return sessionStorage.getItem(config.JWT_KEY);
   }
 
   public isLoggin(): boolean {
@@ -49,8 +49,8 @@ export class TokenService {
   }
 
   public storeUser(user: any) {
-    window.localStorage.removeItem(config.USER_KEY);
-    window.localStorage.setItem(config.USER_KEY, JSON.stringify(user));
+    sessionStorage.removeItem(config.USER_KEY);
+    sessionStorage.setItem(config.USER_KEY, JSON.stringify(user));
   }
 
   public updateUser(updated: any) {
@@ -63,7 +63,7 @@ export class TokenService {
   }
 
   public getUser(): any {
-    const user = window.localStorage.getItem(config.USER_KEY);
+    const user = sessionStorage.getItem(config.USER_KEY);
     if (user) {
       return JSON.parse(user);
     }

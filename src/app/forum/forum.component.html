@@ -1,0 +1,29 @@
+<div class="textImageCenter justify-content-center w-100 ">
+    <span class="fw-bold font-italic m-0 title">Forum</span>
+    <img src="../../assets/forumIcon.png" style="width:48px; height: 48px;">
+</div>
+
+<div class="container mt-3">
+    <div class="row gy-2">
+        @for (item of categories; track $index) {
+        <div class="col-12">
+            <div class="card-header rounded-4 m-0 p-3 text-light" style="background-color: #1e90ff">
+                <div class="d-flex align-items-center justify-content-between">
+
+                    <div
+                        class="card-title fs-4 fw-semibold d-flex m-0 align-items-center justify-content-between text-light">
+                        {{item.name}}
+                    </div>
+                    <div>
+                        <a [routerLink]="'/comments/'+item.id"
+                            class="btn btn-success fs-5 fw-semibold textImageCenter">Enter room<img
+                                src="../../assets/enterIcon.png" /></a>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        }
+    </div>
+</div>

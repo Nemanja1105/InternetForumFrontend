@@ -50,3 +50,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   ::-webkit-scrollbar-track:active {
     background-color: #ccc;
   }
+
+  .textImageCenter{
+    display:flex;
+    align-items: center;
+    gap:10px;
+}
+
+.title{
+    font-size:48px;
+    color:#1e90ff
+}

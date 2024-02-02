@@ -5,11 +5,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../services/AuthService/auth.service';
 import { CustomSnackBarService } from '../services/CustomSnackBar/custom-snack-bar.service';
 import { TokenService } from '../services/TokenService/token-service.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, NgClass, RouterLink, RouterLinkActive, MatTooltipModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -34,6 +35,7 @@ export class LoginComponent {
   });
 
   ngOnInit() {
+    sessionStorage.removeItem("FIRST_PART_LOGIN");
     const rememberedUsername = localStorage.getItem('remember');
     if (rememberedUsername) {
       this.loginForm.patchValue({
@@ -58,9 +60,9 @@ export class LoginComponent {
           if (this.remember.value && this.username.value) {
             localStorage.setItem('remember', this.username.value);
           } else localStorage.removeItem('remember');
-          this.tokenService.storeJwt(data.token);
-          this.tokenService.storeUser(data);
-          this.router.navigate(['']);
+          sessionStorage.setItem("FIRST_PART_LOGIN", data);
+          this.snackBar.openSnackBar("Please check your inbox", "close", true);
+          this.router.navigate(['/login-verify']);
         },
         error: (error) => {
           if (error.status === 401 || error.status == 403) {
@@ -78,7 +80,7 @@ export class LoginComponent {
           } else if (error.status === 406) {
             //The user account is not activated, wait for the administrator to approve the account
             this.snackBar.openSnackBar(
-              'The user account is not activated, please check your inbox',
+              'Your account is not activated',
               'close',
               false
             );

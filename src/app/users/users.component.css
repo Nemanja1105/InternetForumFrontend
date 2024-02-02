@@ -1,0 +1,18 @@
+.table-header-stat th {
+	padding: 10px;
+	font-size: 1.3rem;
+}
+
+.table-body-stat td {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	padding: 10px;
+    font-size:1.15rem;
+}
+
+a.disabled {
+    pointer-events: none; /* Onemogućuje klik na vezu */
+    opacity: 0.5; /* Smanjuje prozirnost elementa kako bi izgledao onemogućen */
+}
+

@@ -1,0 +1,147 @@
+<div class="textImageCenter justify-content-center w-100 ">
+    <span class="fw-bold font-italic m-0 title">Users</span>
+    <img src="../../assets/usersIcon.png" style="width:48px; height: 48px;">
+</div>
+
+<div class="container-fluid">
+    <div class="table-responsive mt-3">
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-header-stat">
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Name</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Approval</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody class="table-body-stat ">
+                @for (item of users; track item.id;let idx=$index ) {
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.username}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.surname}}</td>
+                    <td>{{item.email}}</td>
+                    <td><span class="badge text-bg-primary p-2 fs-semibold fs-6">{{item.role}}</span></td>
+                    <td><span class="badge p-2 fs-semibold fs-6"
+                            [ngClass]="{'text-bg-success':item.verified,'text-bg-warning':!item.verified}">{{item.verified?'Approved':'NotApproved'}}</span>
+                    </td>
+                    <td><span class="badge text-bg-danger p-2 fs-semibold fs-6"
+                            [ngClass]="{'text-bg-danger':!item.status,'text-bg-success':item.status}">{{item.status?'Active':'Blocked'}}</span>
+                    </td>
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <a matTooltip="Approve account" [class.disabled]="item.verified"><img
+                                    src="../../assets/verifyIcon.png" (click)="approveClient(item)" /></a>
+                            <a [matTooltip]="item.status?'Block account':'Unblock account'"
+                                (click)="blockUnblock(item)"><img
+                                    [src]="item.status?'../../assets/lockIcon.png':'../../assets/unlockIcon.png'" /></a>
+                            <a data-bs-toggle="collapse" [href]="'#collapse'+idx" role="button"
+                                matTooltip="Edit roles and permissions"><img src="../../assets/rolesIcon.png" /></a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="9" class="p-0">
+
+                        <div class="collapse" [id]="'collapse'+idx">
+                            <div class="card card-body">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-4 col-md-4">
+                                            <div>
+                                                <label for="roleInput" class="fw-semibold">Role</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="addon-wrapping"><img
+                                                            src="../../assets/rolesIcon.png"
+                                                            style="width:24px; height: 24px;" /></span>
+                                                    <select (change)="changeRole(idx,item)"
+                                                        [formControl]="roleControls[idx]" class="form-select "
+                                                        id="roleInput" name="role" (blur)="onBlur(roleControls[idx])"
+                                                        [ngClass]="{ 'is-invalid': (roleControls[idx].dirty || roleControls[idx].touched) && roleControls[idx].invalid }">
+                                                        <option hidden value="default" style="color: blue;">Select
+                                                            user role</option>
+
+                                                        @for(c of roles; track $index){
+                                                        <option [ngValue]="c">{{c}}</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                @if(roleControls[idx].invalid && (roleControls[idx].dirty ||
+                                                roleControls[idx].touched)){
+                                                <div class="text-danger">
+                                                    Role is required!
+                                                </div>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mt-4">
+                                            <p class="fw-semibold m-0">Permissions</p>
+                                            <div class="d-flex align-items-center gap-3">
+                                                @for (perm of clientPerms[idx]; track $index) {
+                                                <span
+                                                    class="badge bg-primary p-2 fw-semibold fs-6 d-flex align-items-center gap-2">
+                                                    {{perm.name}}
+                                                    <a type="button" aria-label="Close"
+                                                        (click)="deletePerm(idx,perm,item)"><img
+                                                            src="../../assets/closeIcon.png"
+                                                            style="width:16px; height: 16px;" /></a>
+                                                </span>
+                                                }
+                                                @empty {
+                                                <p class="fw-semibold text-secondary m-0">User doesn't have set
+                                                    permissions
+                                                </p>
+                                                }
+
+                                            </div>
+                                            <div class="container-flud mt-2">
+                                                <div class="row">
+                                                    <div class="col-4 col-md-4">
+                                                        <div>
+                                                            <label for="roleInput" class="fw-semibold">Add
+                                                                permission</label>
+                                                            <div class="input-group">
+                                                                <span class="input-group-text" id="addon-wrapping"><img
+                                                                        src="../../assets/rolesIcon.png"
+                                                                        style="width:24px; height: 24px;" /></span>
+                                                                <select (change)="addPerm(idx,item)"
+                                                                    [formControl]="permission" class="form-select "
+                                                                    id="roleInput" name="role"
+                                                                    (blur)="onBlur(permission)">
+                                                                    <option hidden value="default" style="color: blue;">
+                                                                        Select
+                                                                        user permission</option>
+
+                                                                    @for(c of selectPermission(idx); track $index){
+                                                                    <option [ngValue]="c">{{c.name}}</option>
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
