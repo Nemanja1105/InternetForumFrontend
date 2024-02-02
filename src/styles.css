@@ -1,1 +1,52 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.snackbar-success {
+    .mdc-snackbar__surface {
+      background-color: #198754 !important;
+    }
+  }
+
+  .snackbar-unsuccess {
+    .mdc-snackbar__surface {
+      background-color: #dc3545 !important;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f1f1f1;
+  }
+  
+  /* Boja "tragača" (handle-a) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  
+  /* Promjena boje na hover scrollbar-a */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  /* Promjena stila scrollbar tragača na klik */
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #555;
+  }
+  
+  /* Boja pozadine scrollbar tragača */
+  ::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
+  
+  /* Promjena boje pozadine na hover scrollbar tragača */
+  ::-webkit-scrollbar-track:hover {
+    background-color: #ddd;
+  }
+  
+  /* Promjena stila na hover scrollbar tragača */
+  ::-webkit-scrollbar-track:active {
+    background-color: #ccc;
+  }

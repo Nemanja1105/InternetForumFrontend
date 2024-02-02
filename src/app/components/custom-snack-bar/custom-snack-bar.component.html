@@ -1,0 +1,16 @@
+<div class="cus-snackbar snackbar-success">
+    <div class="snack-mess">
+        @if(data?.success){
+        <img src="../../../assets/sucessIcon.png">
+        }@else {
+        <img src="../../../assets/unsuccessIcon.png">
+        }
+        &nbsp;
+        <span>{{data?.message}}</span>
+    </div>
+
+    <button class="btn" [ngClass]="{'btn-success':data?.success,'btn-danger':data?.success==false}"
+        (click)="close()">{{data?.action}}</button>
+
+
+</div>
