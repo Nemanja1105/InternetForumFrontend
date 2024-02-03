@@ -1,0 +1,29 @@
+<!--<h1 mat-dialog-title>Delete file</h1>
+<div mat-dialog-content>
+  Would you like to delete cat.jpeg?
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+</div>-->
+<div class="p-3">
+    <div>
+        <div class="w-100 d-flex justify-content-center gap-2 align-items-center">
+
+            <h3 class="fs-4 m-0 fw-semibold">Delete</h3>
+            <img src="../../../assets/deleteIcon.jpeg" />
+        </div>
+    </div>
+    <div class=" text-center fw-semibold fs-5 text-secondary"> {{data.message}}</div>
+    <!--<div class="modal-footer d-flex justify-content-center">
+    <button type="button" class="btn btn-success fw-semibold" id="confirmDeleteBtn" style="width:90px">Yes</button>
+    <button type="button" class="btn btn-danger fw-semibold" mat-dialog-close aria-label="Close"
+        style="width:90px">No</button>
+</div>-->
+    <hr class="mb-1" />
+    <div mat-dialog-actions class="d-flex justify-content-center gap-3">
+        <button class="btn btn-success fw-semibold " [mat-dialog-close]="true">Yes</button>
+        <button class="btn btn-danger fw-semibold" [mat-dialog-close]="false" (click)="closeDialog()">No</button>
+
+    </div>
+</div>

@@ -12,4 +12,8 @@ export class ForumCategoryService {
   public findAll() {
     return this.http.get(config.API_URL + "/forum/categories");
   }
+
+  public findById(id: any) {
+    return this.http.get(config.API_URL + `/forum/categories/${id}`);
+  }
 }
