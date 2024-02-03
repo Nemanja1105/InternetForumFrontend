@@ -25,5 +25,17 @@ export class ForumService {
     return this.http.delete(config.API_URL + `/forum/${categoryId}/comments/${commentId}/${clientId}`);
   }
 
+  public findAllPending() {
+    return this.http.get(config.API_URL + `/forum/comments/pending`);
+  }
+
+  public acceptComment(commentId: any, request: any) {
+    return this.http.put(config.API_URL + `/forum/comments/${commentId}/accept`, request);
+  }
+
+  public declineComment(commentId: any) {
+    return this.http.delete(config.API_URL + `/forum/comments/${commentId}/decline`);
+  }
+
 
 }

@@ -9,11 +9,12 @@ import { ForumCategoryService } from '../services/ForumCategoryService/forum-cat
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogComponent } from '../components/delete-dialog/delete-dialog.component';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-forum-comments',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, DatePipe, NgbCollapseModule, NgClass],
+  imports: [ReactiveFormsModule, NgClass, DatePipe, NgbCollapseModule, NgClass, MatTooltip],
   templateUrl: './forum-comments.component.html',
   styleUrl: './forum-comments.component.css'
 })
@@ -42,6 +43,7 @@ export class ForumCommentsComponent {
       })
     });
     this.clientId = jwtService.getUser().id;
+    this.client = jwtService.getUser();
   }
   form = this.fb.group({ message: ['', Validators.required] });
   id: any = null;
@@ -50,6 +52,7 @@ export class ForumCommentsComponent {
   comments: any = [];
   selectedComment: any = null;
   isCollapseClosed = true;
+  client: any = null;
 
   onBlur(control: any) {
     control.markAsTouched();
@@ -67,6 +70,8 @@ export class ForumCommentsComponent {
     this.isCollapseClosed = !this.isCollapseClosed;
     this.selectedComment = null;
   }
+
+
 
   deleteComment(comment: any) {
     let dialogRef = this.dialog.open(DeleteDialogComponent, { data: { message: "Are you sure you want to delete comment?" } });
@@ -93,6 +98,24 @@ export class ForumCommentsComponent {
 
   }
 
+
+  canEdit(comment: any) {
+    return (comment?.sender?.id === this.client.id || this.client.role === 'Admin' || this.client.role === 'Moderator') && this.haspermission('update');
+  }
+
+  canDelete(comment: any) {
+    return (comment?.sender?.id === this.client.id || this.client.role === 'Admin' || this.client.role === 'Moderator') && this.haspermission('delete');
+  }
+
+  canCreate() {
+    return this.haspermission('create');
+  }
+
+
+  haspermission(perm: any) {
+    return this.client.permissions.includes(perm);
+  }
+
   createMessage() {
     let tmp = this.form.value;
     let obj = { comment: tmp.message, senderId: this.clientId }
@@ -109,12 +132,17 @@ export class ForumCommentsComponent {
           this.form.reset();
           this.selectedComment = null;
           this.isCollapseClosed = true;
-        }, error: () => {
-          this.snackBar.openSnackBar(
-            'Error communicating with the server',
-            'close',
-            false
-          );
+        }, error: (error) => {
+          if (error.status === 400) {
+            this.jwtService.logout();
+            this.router.navigate(['/login']);
+          }
+          else
+            this.snackBar.openSnackBar(
+              'Error communicating with the server',
+              'close',
+              false
+            );
         }
       });
     }
@@ -128,12 +156,18 @@ export class ForumCommentsComponent {
           );
           this.form.reset();
           this.isCollapseClosed = true;
-        }, error: () => {
-          this.snackBar.openSnackBar(
-            'Error communicating with the server',
-            'close',
-            false
-          );
+        }, error: (error) => {
+          if (error.status === 400) {
+            this.jwtService.logout();
+            this.router.navigate(['/login']);
+          }
+          else {
+            this.snackBar.openSnackBar(
+              'Error communicating with the server',
+              'close',
+              false
+            );
+          }
         }
       });
     }

@@ -5,6 +5,8 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { PermissionService } from '../services/PermissionsService/permission.service';
 import { CustomSnackBarService } from '../services/CustomSnackBar/custom-snack-bar.service';
 import { UserService } from '../services/UserService/user.service';
+import { Router } from '@angular/router';
+import { TokenService } from '../services/TokenService/token-service.service';
 
 @Component({
   selector: 'app-users',
@@ -26,7 +28,7 @@ export class UsersComponent {
 
   users: any = [];
 
-  constructor(private permissionsService: PermissionService, private snackBar: CustomSnackBarService, private userService: UserService) {
+  constructor(private router: Router, private jwtService: TokenService, private permissionsService: PermissionService, private snackBar: CustomSnackBarService, private userService: UserService) {
     this.permissionsService.findAll().subscribe({
       next: (data) => { this.permissions = data }, error: () => {
         this.snackBar.openSnackBar(
@@ -93,12 +95,17 @@ export class UsersComponent {
           'close',
           true
         );
-      }, error: () => {
-        this.snackBar.openSnackBar(
-          'Error communicating with the server',
-          'close',
-          false
-        );
+      }, error: (error) => {
+        if (error.status === 400) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
+        else
+          this.snackBar.openSnackBar(
+            'Error communicating with the server',
+            'close',
+            false
+          );
       }
     })
 
@@ -133,12 +140,17 @@ export class UsersComponent {
           'close',
           true
         );
-      }, error: () => {
-        this.snackBar.openSnackBar(
-          'Error communicating with the server',
-          'close',
-          false
-        );
+      }, error: (error) => {
+        if (error.status === 400) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
+        else
+          this.snackBar.openSnackBar(
+            'Error communicating with the server',
+            'close',
+            false
+          );
       }
     })
   }

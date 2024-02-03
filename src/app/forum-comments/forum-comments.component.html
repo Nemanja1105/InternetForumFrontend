@@ -7,9 +7,11 @@
 <div class="container mt-3">
     <div class="row">
         <div class="d-flex justify-content-end p-0">
+            @if(canCreate()){
             <button matTooltip="Send new message" class="btn btn-primary textImageCenter fw-semibold"
-                (click)="openNewMessageCollapse()">{{isCollapseClosed?'New comment':'Close'}}<img
-                    src="../../assets/commentIcon.png" style="width: 24px; height: 24px;" /></button>
+                (click)="openNewMessageCollapse()">New comment<img src="../../assets/commentIcon.png"
+                    style="width: 24px; height: 24px;" /></button>
+            }
         </div>
         <div class="mt-2 p-0" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapseClosed" id="newMessage">
             <div class="card p-3  rounded-4">
@@ -34,10 +36,13 @@
                         }
 
                     </div>
-                    <div class="d-flex justify-content-center mt-2">
+                    <div class="d-flex justify-content-center align-items-center gap-2 mt-2">
                         <button matTooltip="Send message" class="btn btn-success fw-semibold textImageCenter "
                             [disabled]="form.invalid" (click)="createMessage()">{{selectedComment?'Edit comment':'Send
                             comment'}}<img src="../../assets/sendMessageIcon.jpeg" /></button>
+                        <button matTooltip="Close" class="btn btn-danger textImageCenter fw-semibold gap-3"
+                            (click)="openNewMessageCollapse()">Close<img src="../../assets/closeIcon.png"
+                                style="width: 16px; height: 16px;" /></button>
                     </div>
                 </form>
 
@@ -57,18 +62,21 @@
 
                     </div>
                     <div class="d-flex align-items-center gap-2">
-
+                        @if(this.canEdit(item)){
                         <button matTooltip="Edit comment"
                             class="btn btn-outline-warning fw-semibold fs-6 textImageCenter"
                             (click)="selectCommentForEdit(item)">
                             Edit
                             <img src="../../assets/editIcon.png" style="width: 24px; height: 24px;" />
                         </button>
+                        }
+                        @if(this.canDelete(item)){
                         <button matTooltip="Delete comment" (click)="deleteComment(item)"
                             class="btn btn-outline-danger fw-semibold fs-6 textImageCenter">
                             Delete
                             <img src="../../assets/deleteIcon.jpeg" style="width: 24px; height: 24px;" />
                         </button>
+                        }
                     </div>
 
                 </div>

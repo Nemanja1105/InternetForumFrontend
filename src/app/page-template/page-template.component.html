@@ -22,16 +22,20 @@
                             <a class="nav-link  centerIconText" routerLink="/forum" routerLinkActive="active"><img
                                     src="../../assets/forumNavIcon.png" style="width:24px; height: 24px;" />Forum</a>
                         </li>
+                        @if(user.role==='Admin'){
                         <li class="nav-item mx-1">
                             <a class="nav-link  centerIconText" routerLink="/user" routerLinkActive="active"><img
                                     src="../../assets/userWhIcon.png" style="width:24px; height: 24px;" />Users</a>
                         </li>
+                        }
+                        @if(user.role==='Admin' || user.role==='Moderator'){
                         <li class="nav-item mx-1">
                             <a class="nav-link  centerIconText" routerLink="/pending-comments"
                                 routerLinkActive="active"><img src="../../assets/chatIcon.png"
                                     style="width:24px; height: 24px;" />Pending
                                 comments</a>
                         </li>
+                        }
 
 
 

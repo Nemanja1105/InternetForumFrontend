@@ -6,6 +6,7 @@ import { AuthService } from '../services/AuthService/auth.service';
 import { CustomSnackBarService } from '../services/CustomSnackBar/custom-snack-bar.service';
 import { TokenService } from '../services/TokenService/token-service.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { config } from '../config/config';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +48,10 @@ export class LoginComponent {
 
   onBlur(control: any) {
     control.markAsTouched();
+  }
+
+  signInWithGitHub() {
+    window.location.href = config.GITHUB_OAUTH2();
   }
 
   onSubmit() {

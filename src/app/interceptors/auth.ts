@@ -16,8 +16,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     return next(req).pipe(
         tap((event) => {
             if (event.type === HttpEventType.Response) {
-                if (event.status === 401 && !event.url?.includes('/auth')) {
+                if ((event.status === 401 && !event.url?.includes('/auth')) || event.status === 400) {
+                    console.log(event.status);
+                    tokenService.logout();
                     router.navigate(['/login']);
+
                 }
             }
         })

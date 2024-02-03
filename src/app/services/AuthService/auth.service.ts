@@ -26,6 +26,10 @@ export class AuthService {
     return this.http.post(config.API_URL + "/auth/finish-login", request);
   }
 
+  public loginWithGithub(code: any): Observable<any> {
+    return this.http.get(config.API_URL + `/auth/login/github?code=${code}`);
+  }
+
 
 
 }
