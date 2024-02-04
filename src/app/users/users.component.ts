@@ -30,12 +30,17 @@ export class UsersComponent {
 
   constructor(private router: Router, private jwtService: TokenService, private permissionsService: PermissionService, private snackBar: CustomSnackBarService, private userService: UserService) {
     this.permissionsService.findAll().subscribe({
-      next: (data) => { this.permissions = data }, error: () => {
-        this.snackBar.openSnackBar(
-          'Error communicating with the server',
-          'close',
-          false
-        );
+      next: (data) => { this.permissions = data }, error: (error) => {
+        if (error.status === 400 || error.status === 403) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
+        else
+          this.snackBar.openSnackBar(
+            'Error communicating with the server',
+            'close',
+            false
+          );
       }
     });
 
@@ -44,12 +49,18 @@ export class UsersComponent {
         this.users = data;
         this.clientPerms = data.map((el: any) => el.permissions);
         this.roleControls = data.map((el: any) => new FormControl(el.role, [Validators.required]));
-      }, error: () => {
-        this.snackBar.openSnackBar(
-          'Error communicating with the server',
-          'close',
-          false
-        );
+      }, error: (error) => {
+        console.log(error);
+        if (error.status === 400 || error.status === 403) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
+        else
+          this.snackBar.openSnackBar(
+            'Error communicating with the server',
+            'close',
+            false
+          );
       }
     })
 
@@ -96,7 +107,7 @@ export class UsersComponent {
           true
         );
       }, error: (error) => {
-        if (error.status === 400) {
+        if (error.status === 400 || error.status === 403) {
           this.jwtService.logout();
           this.router.navigate(['/login']);
         }
@@ -120,7 +131,11 @@ export class UsersComponent {
           'close',
           true
         );
-      }, error: () => {
+      }, error: (error) => {
+        if (error.status === 400 || error.status === 403) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
         this.snackBar.openSnackBar(
           'Error communicating with the server',
           'close',
@@ -141,7 +156,7 @@ export class UsersComponent {
           true
         );
       }, error: (error) => {
-        if (error.status === 400) {
+        if (error.status === 400 || error.status === 403) {
           this.jwtService.logout();
           this.router.navigate(['/login']);
         }
@@ -156,7 +171,7 @@ export class UsersComponent {
   }
 
   blockUnblock(item: any) {
-    console.log("aaa");
+
     this.userService.blockUnblock(item.id).subscribe({
       next: () => {
         item.status = !item.status;
@@ -166,12 +181,17 @@ export class UsersComponent {
           'close',
           true
         );
-      }, error: () => {
-        this.snackBar.openSnackBar(
-          'Error communicating with the server',
-          'close',
-          false
-        );
+      }, error: (error) => {
+        if (error.status === 400 || error.status === 403) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
+        else
+          this.snackBar.openSnackBar(
+            'Error communicating with the server',
+            'close',
+            false
+          );
       }
     })
   }

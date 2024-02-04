@@ -20,7 +20,11 @@ export class PendingCommentsComponent {
     this.forumService.findAllPending().subscribe({
       next: (data) => {
         this.comments = data;
-      }, error: () => {
+      }, error: (error) => {
+        if (error.status === 400 || error.status == 403) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
         this.snackBar.openSnackBar(
           'Error communicating with the server',
           'close',
@@ -67,7 +71,7 @@ export class PendingCommentsComponent {
         );
         this.comments = this.comments.filter((el: any) => el.id !== comment.id);
       }, error: (error) => {
-        if (error.status === 400) {
+        if (error.status === 400 || error.status == 403) {
           this.jwtService.logout();
           this.router.navigate(['/login']);
         }
@@ -91,12 +95,17 @@ export class PendingCommentsComponent {
           true
         );
         this.comments = this.comments.filter((el: any) => el.id !== comment.id);
-      }, error: () => {
-        this.snackBar.openSnackBar(
-          'Error communicating with the server',
-          'close',
-          false
-        );
+      }, error: (error) => {
+        if (error.status === 400 || error.status == 403) {
+          this.jwtService.logout();
+          this.router.navigate(['/login']);
+        }
+        else
+          this.snackBar.openSnackBar(
+            'Error communicating with the server',
+            'close',
+            false
+          );
       }
     })
   }

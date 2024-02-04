@@ -33,7 +33,7 @@ export class ForumCommentsComponent {
         }
       });
       this.forumService.findAllCommentByCategoryId(this.id).subscribe({
-        next: (data) => { this.comments = data; }, error: () => {
+        next: (data) => { this.comments = data; }, error: (error) => {
           this.snackBar.openSnackBar(
             'Error communicating with the server',
             'close',
@@ -85,12 +85,18 @@ export class ForumCommentsComponent {
               true
             );
             this.comments = this.comments.filter((el: any) => el.id !== comment.id);
-          }, error: () => {
-            this.snackBar.openSnackBar(
-              'Error communicating with the server',
-              'close',
-              false
-            );
+          }, error: (error) => {
+
+            if (error.status == 403) {
+              this.jwtService.logout();
+              this.router.navigate(['/login']);
+            }
+            else
+              this.snackBar.openSnackBar(
+                'Error communicating with the server',
+                'close',
+                false
+              );
           }
         });
       }
@@ -133,7 +139,7 @@ export class ForumCommentsComponent {
           this.selectedComment = null;
           this.isCollapseClosed = true;
         }, error: (error) => {
-          if (error.status === 400) {
+          if (error.status === 400 || error.status == 403) {
             this.jwtService.logout();
             this.router.navigate(['/login']);
           }
@@ -157,7 +163,7 @@ export class ForumCommentsComponent {
           this.form.reset();
           this.isCollapseClosed = true;
         }, error: (error) => {
-          if (error.status === 400) {
+          if (error.status === 400 || error.status == 403) {
             this.jwtService.logout();
             this.router.navigate(['/login']);
           }
