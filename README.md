@@ -1,5 +1,5 @@
 <h1>Description:</h1>
-InternetForum is a comprehensive web application designed to facilitate online discussions among registered users on various topics. The forum is organized into distinct categories or "rooms," including Science, Culture, Sports, and Music, allowing users to engage in discussions tailored to their interests.
+InternetForum is web application built using Angular 17, with a user interface powered by Bootstrap and Angular Material, designed to facilitate online discussions among registered users on various topics. The forum is organized into distinct categories or "rooms," including Science, Culture, Sports, and Music, allowing users to engage in discussions tailored to their interests.
 
 This web application comprises three main sections, each accessible to users based on their assigned user group: Administrator, Moderator, and Forum User.
 
