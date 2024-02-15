@@ -11,11 +11,6 @@ The Forum section is accessible to all user groups and serves as the primary pla
 
 The registration process for new users involves approval by administrators, after which users receive a notification via email. Subsequently, users can log in to the system using two-factor authentication, ensuring enhanced security. Upon login, users receive a JWT token to track their session securely.
 
-The system architecture, depicted in Figure 1, consists of several components to manage user requests, authentication, authorization, and security. The Access Controller handles user requests, while the Authentication Controller manages user authentication and authorization. Additionally, the JWT Controller issues and validates JWT tokens for session tracking.
-
-The Web Application Firewall (WAF) ensures the security of user requests by filtering potentially malicious traffic and enforcing defined rules for user input. The Certificate Controller is responsible for managing digital certificates for system components, while the SIEM component monitors and logs security-sensitive activities.
-
-Furthermore, the system supports OAuth2 authentication, allowing users to log in using external accounts such as Google or GitHub.
 ![image](https://github.com/Nemanja1105/SigurnostFrontend/assets/93669392/45ba4329-d565-46d8-b486-4ee1ffbe7bba)
 ![image](https://github.com/Nemanja1105/SigurnostFrontend/assets/93669392/e89fb579-bdc6-4d24-ae7f-23d4ce541119)
 ![image](https://github.com/Nemanja1105/SigurnostFrontend/assets/93669392/486e1404-2dc5-4c8b-9290-ece9e730ed4b)
